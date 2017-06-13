@@ -1,0 +1,8 @@
+Django==1.11.2
+
+djangorestframework==3.6.3
+django-filter
+
+django-mptt==0.8.7
+
+lxml

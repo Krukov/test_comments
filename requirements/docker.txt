@@ -1,0 +1,9 @@
+-r base.txt
+django-debug-toolbar
+
+psycopg2
+
+gunicorn==19.7.0
+meinheld==0.6.1
+
+requests

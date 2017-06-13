@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    environment:
+      - DEBUG=off
+      - DJANGO_SETTINGS_MODULE=settings.docker
+      - POSTGRES_PASSWORD=local
+      - POSTGRES_USER=root
+      - POSTGRES_DB=app
+    ports:
+      - "8080:8080"
+    command: gunicorn wsgi:app --access-logfile=- --error-logfile=- --bind=0.0.0.0:8080 --workers=4 --worker-class="egg:meinheld#gunicorn_worker"
+
+  db:
+    image: postgres:alpine
+    hostname: postgres
+    environment:
+      - POSTGRES_PASSWORD=local
+      - POSTGRES_USER=root
+      - POSTGRES_DB=app
