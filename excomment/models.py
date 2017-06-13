@@ -12,7 +12,10 @@ User = get_user_model()
 
 
 class Comment(MPTTModel):
-    body = models.TextField(_('Message'))
+    _action_by = None  # for history
+    _old_body = None  # for history
+
+    body = models.TextField(max_length=255, verbose_name=_('Message'))
     author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE,
                                verbose_name=_('Author'))
     created = models.DateTimeField(auto_now_add=True)

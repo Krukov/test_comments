@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
@@ -27,7 +28,7 @@ class TestCreateUpdateComments(APITestCase):
         url = reverse('api:comments-list')
         data = {'body': 'test', 'content_type': self.content_type.id, 'object_id': self.user.id}
 
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(6):
             res = self.client.post(url, data=data)
 
         self.assertEqual(res.status_code, 201)
@@ -49,7 +50,7 @@ class TestCreateUpdateComments(APITestCase):
         for i in range(100):
             data = {'body': 'test_parent_{}'.format(i), 'content_type': self.content_type.id, 'object_id': self.user.id,
                     'parent': parent.id}
-            with self.assertNumQueries(6):
+            with self.assertNumQueries(7):
                 res = self.client.post(url, data)
             self.assertEqual(res.status_code, 201)
 

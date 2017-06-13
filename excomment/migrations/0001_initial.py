@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             name='Comment',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('body', models.TextField(verbose_name='Message')),
+                ('body', models.TextField(verbose_name='Message', max_length=255)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('object_id', models.PositiveIntegerField()),
                 ('lft', models.PositiveIntegerField(db_index=True, editable=False)),

@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     'excomment',
+    'excomment.history',
 ]
 
 MIDDLEWARE = [

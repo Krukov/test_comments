@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 
 from django.contrib.auth import get_user_model

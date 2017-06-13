@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-
 from django.http import StreamingHttpResponse, HttpResponseNotFound
+from django.utils.translation import ugettext_lazy as _
+
 from rest_framework import generics, viewsets, status
 from rest_framework.response import Response
 from rest_framework.filters import DjangoFilterBackend
@@ -41,10 +42,16 @@ class CommentViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if Comment.objects.filter(parent_id=instance.id).exists():
-            return Response(data={'errors': ['Comment has children']},
+            return Response(data={'errors': [_('Comment has children'), ]},
                             status=status.HTTP_400_BAD_REQUEST)
+        instance._action_by = request.user
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_update(self, serializer):
+        serializer.instance._action_by = self.request.user
+        serializer.instance._old_body = serializer.instance.body
+        serializer.save()
 
 
 class ChildrenCommentsListView(generics.ListAPIView):
